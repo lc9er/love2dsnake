@@ -90,7 +90,8 @@ function love.update(dt)
             end
 
             -- check for wall collision
-            if checkCollision(nextXPosition, nextYPosition) then
+            if canMove 
+                and checkCollision(nextXPosition, nextYPosition) then
                 canMove = true
             else
                 canMove = false
