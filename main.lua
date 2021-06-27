@@ -9,9 +9,9 @@ end
 
 function reset()
     snakeSegments = {
-        { x = 3, y = 1 },
-        { x = 2, y = 1 },
-        { x = 1, y = 1 },
+        { x = 4, y = 3 },
+        { x = 3, y = 3 },
+        { x = 2, y = 3 },
     }
 
     -- directionQueue ensures 1 move per loop
@@ -22,18 +22,30 @@ function reset()
     score = 0
 end
 
+-- Working
+-- function checkCollision(x, y)
+--     return x * cellSize > 0
+--     and x < gridXCount + 1
+--     and y * cellSize > 0
+--     and y < gridYCount + 1
+-- end
+
 function checkCollision(x, y)
-    return x * cellSize > 0
-    and x < gridXCount + 1
-    and y * cellSize > 0
-    and y < gridYCount + 1
+    -- hit left wall 
+    return x * cellSize > cellSize
+    -- hit right wall
+    and x < gridXCount
+    -- top wall
+    and y * cellSize > cellSize * 2
+    -- bottom wall
+    and y < gridYCount
 end
 
 function moveFood()
     local possibleFoodPositions = {}
 
-    for foodX = 1, gridXCount do
-        for foodY = 1, gridYCount do
+    for foodX = 2, gridXCount - 1 do
+        for foodY = 3, gridYCount - 1 do
             local possible = true
 
             for segmentIndex, segment in ipairs(snakeSegments) do
