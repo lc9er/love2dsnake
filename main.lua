@@ -19,6 +19,7 @@ function reset()
     moveFood()
     timer = 0 
     snakeAlive = true
+    score = 0
 end
 
 function checkCollision(x, y)
@@ -103,9 +104,11 @@ function love.update(dt)
                         x = nextXPosition, y = nextYPosition
                     })
 
+
                 if snakeSegments[1].x == foodPosition.x
                     and snakeSegments[1].y == foodPosition.y then
                     moveFood()
+                    score = score + 1
                 else
                     table.remove(snakeSegments)
                 end
@@ -150,13 +153,50 @@ end
 
 function love.draw()
 
-    love.graphics.setColor(.28, .28, .28)
+    -- love.graphics.setColor(.28, .28, .28)
+    -- Scoreboard
+    love.graphics.setColor(0,0,0)
     love.graphics.rectangle(
         'fill',
         0,
         0,
         gridXCount * cellSize,
-        gridYCount * cellSize
+        2 * cellSize
+        )
+
+    -- Top wall 
+    love.graphics.setColor(.7, .8, 1)
+    for i=0, gridXCount do
+        drawCell(i, 2)
+    end
+
+    -- Bottom wall 
+    love.graphics.setColor(.7, .8, 1)
+    for i=0, gridXCount do
+        drawCell(i, gridYCount)
+    end
+
+    -- Left wall 
+    love.graphics.setColor(.7, .8, 1)
+    for i=2, gridYCount do
+        drawCell(1, i)
+    end
+
+    -- Right wall 
+    love.graphics.setColor(.7, .8, 1)
+    for i=2, gridYCount do
+        drawCell(gridXCount, i)
+    end
+
+
+    -- Field of play
+    love.graphics.setColor(.28, .28, .28)
+    love.graphics.rectangle(
+        'fill',
+        cellSize,
+        2 * cellSize,
+        (gridXCount - 2) * cellSize,
+        (gridYCount - 3) * cellSize
         )
 
 
@@ -173,12 +213,10 @@ function love.draw()
     love.graphics.setColor(1, .3, .3)
     drawCell(foodPosition.x, foodPosition.y)
 
-    -- -- Temporary (debugging)
-    -- for directionIndex, direction in ipairs(directionQueue) do
-    --     love.graphics.setColor(1, 1, 1)
-    --     love.graphics.print(
-    --         'X Coord:[' ..snakeSegments[1].x.. '], Y Coord:[' .. snakeSegments[1].y .. ']',
-    --         15, 15 * directionIndex
-    --     )
-    -- end
+    -- Score
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(
+        'Score:' .. score,
+        15, 1
+    )
 end
