@@ -1,0 +1,6 @@
+Snake Rules:
+
+1. Eating food makes the snake grow.
+2. When food is eaten, a new food appears at a random position.
+3. The snake wraps from one side of the screen to the opposite.
+4. Game ends when it crashes into itself.
