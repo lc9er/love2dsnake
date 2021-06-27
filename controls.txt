@@ -1,3 +1,0 @@
-Controls:
-
-1. Arrow keys change direction.
