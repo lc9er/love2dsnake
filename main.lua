@@ -1,10 +1,23 @@
 function love.load()
+    lume = require "lume"
+
     -- Grid size
     gridXCount = 30
     gridYCount = 23
     cellSize = 15
 
     reset()
+end
+
+function getHighScore()
+    if love.filesystem.getInfo("snake_high_score.txt") then
+        file = love.filesystem.read("snake_high_score.txt")
+        hscore = lume.deserialize(file)
+    else
+        hscore = 0
+    end 
+
+    return hscore
 end
 
 function reset()
@@ -20,15 +33,13 @@ function reset()
     timer = 0 
     snakeAlive = true
     score = 0
+    highscore = getHighScore()
 end
 
--- Working
--- function checkCollision(x, y)
---     return x * cellSize > 0
---     and x < gridXCount + 1
---     and y * cellSize > 0
---     and y < gridYCount + 1
--- end
+function setHighScore(newHighScore)
+    serialized = lume.serialize(newHighScore)
+    love.filesystem.write("snake_high_score.txt", serialized)
+end
 
 function checkCollision(x, y)
     -- hit left wall 
@@ -129,6 +140,9 @@ function love.update(dt)
             end
         end
     elseif timer >= 2 then
+        if score > highscore then
+            setHighScore(score)
+        end
         reset()
     end
 end
@@ -228,7 +242,7 @@ function love.draw()
     -- Score
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(
-        'Score:' .. score,
+        'Score: ' .. score .. '          HighScore: ' .. highscore ,
         15, 1
-    )
+        )
 end
