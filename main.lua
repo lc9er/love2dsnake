@@ -2,8 +2,8 @@ function love.load()
     lume = require "lume"
 
     -- Grid size
-    gridXCount = 30
-    gridYCount = 23
+    gridXCount = 20
+    gridYCount = 20
     cellSize = 15
 
     reset()
