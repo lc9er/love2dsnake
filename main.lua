@@ -34,6 +34,7 @@ function reset()
     snakeAlive = true
     score = 0
     highscore = getHighScore()
+    speed = 0.15
 end
 
 function setHighScore(newHighScore)
@@ -80,7 +81,7 @@ function love.update(dt)
     timer = timer + dt
 
     if snakeAlive then
-        if timer >= 0.15 then
+        if timer >= speed then
             timer = 0
 
             if #directionQueue > 1 then
@@ -132,6 +133,10 @@ function love.update(dt)
                     and snakeSegments[1].y == foodPosition.y then
                     moveFood()
                     score = score + 1
+                    -- Increase speed on hard mode
+                    -- if speed > 0.07 then
+                    --     speed = speed * .98
+                    -- end
                 else
                     table.remove(snakeSegments)
                 end
